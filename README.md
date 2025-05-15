@@ -57,12 +57,14 @@ graph TD
 ```
 
 ## Directory Structure
+```
 ├── data/                  # 논문, 뉴스, 키워드 트렌드 JSON/CSV/PDF
 ├── agents/                # 평가 기준별 Agent 모듈
 ├── prompts/               # 보고서 및 요약용 프롬프트 템플릿
 ├── outputs/               # 생성된 트렌드 분석 보고서 저장
 ├── app.py                 # 그래프 실행 및 전체 파이프라인 제어
 └── README.md
+```
 
 ## Contributors 
 - 구동빈 : Prompt Engineering, Agent Design, 전체 파이프라인 통합
