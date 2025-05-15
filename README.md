@@ -45,6 +45,8 @@
 
 
 ## Architecture
+
+```mermaid
 graph TD
     시작 --> A[최신 연구/뉴스 수집 에이전트]
     A --> B[핵심 기술 요약 에이전트]
@@ -52,7 +54,7 @@ graph TD
     C --> D[리스크 및 기회 분석 에이전트]
     D --> E[트렌드 보고서 작성 에이전트]
     E --> 종료
-
+```
 
 ## Directory Structure
 ├── data/                  # 논문, 뉴스, 키워드 트렌드 JSON/CSV/PDF
