@@ -1,4 +1,4 @@
-# TITLE
+# 미래 기술 트랜드 분석
 본 프로젝트는 AI, 로보틱스, 에너지 등 주요 미래 기술 분야의 데이터를 분석하여, 향후 5년 이내 기업들이 주목해야 할 트렌드를 예측하는 미래 기술 트렌드 분석 에이전트 시스템을 설계하고 구현한 실습 프로젝트입니다.
 
 ## Overview
@@ -24,23 +24,23 @@
 
 
 ## Agents
- 
-- Agent A(연구/뉴스 수집 에이전트): 최근 2년간 주요 논문, 기사, 키워드 트렌드 수집
-- Agent B(핵심 기술 요약 에이전트): 분야별 핵심 기술 성과 요약 및 정제
-- Agent C(트렌드 예측 에이전트): 기술 발전 방향 및 시장 성장성 정량적 예측
-- Agent D(리스크 및 기회 분석 에이전트): 기술별 위험 요인과 산업 적용 기회 도출
-- Agent E - 보고서 생성 에이전트: 분석 결과를 종합해 구조화된 보고서 자동 생성
-
-
+- **CollectAgent** (`agent_collect.py`) : 최근 2년간 주요 논문, 뉴스, 트렌드 데이터 수집
+- **KeywordAgent** (`agent_keywords.py`) : 수집 데이터에서 핵심 키워드 추출 및 트렌드 시계열 집계, 시장 이벤트 기사 카운트
+- **ProphetAgent** (`agent_prophet.py`) : 추출된 키워드별 트렌드 데이터의 미래 예측 (시계열, Prophet 기반)
+- **RiskAgent** (`agent_risk.py`) : 시장별 주요 기회 및 리스크 도출 (*옵션/확장 모듈*)
+- **ReportAgent** (`agent_report.py`) : 전체 결과를 보고서로 자동 생성 (Markdown → PDF)
 
 
 ## State
 
-- CollectState : 검색 키워드를 기반으로 논문/뉴스/트렌드 데이터를 수집한다.
-- SummarizeState : 수집된 데이터를 기술별로 요약하고 핵심 정보를 추출한다.
-- PredictState : 논문 수, 검색량 등 수치를 분석하여 기술 발전 방향과 시기 예측
-- AnalyzeState : 산업별 기회, 시장 진입 장벽, 규제 위험 등을 분석한다.
-- ReportState : 모든 결과를 종합하여 보고서 형식으로 구성하고 출력한다.
+| State Name            | 역할 및 설명                                                                                       | 코드 상 노드명            |
+|-----------------------|---------------------------------------------------------------------------------------------------|---------------------------|
+| **collect_data**      | 사용자의 질의(키워드)를 기반으로 최근 2년간 논문, 뉴스, 트렌드 데이터를 수집합니다.               | collect_data              |
+| **preprocess_analyze**| 수집한 데이터를 바탕으로 분야별 핵심 키워드를 추출하고, 키워드별 시계열 집계 및 시장 이벤트도 분석합니다. | preprocess_analyze        |
+| **forecast_trend**    | 추출된 키워드별로 Prophet을 활용한 미래 트렌드 예측(시계열 예측 및 그래프 생성)을 수행합니다.       | forecast_trend            |
+| **risk_opportunity**  | 예측 결과 및 데이터 기반으로 산업별 주요 기회, 시장 진입장벽, 규제 등 리스크를 분석합니다.         | risk_opportunity          |
+| **generate_report**   | 전체 분석 결과를 구조화된 트렌드 보고서(Markdown→PDF)로 자동 생성하고 저장합니다.                | generate_report           |
+
 
 
 
@@ -48,12 +48,12 @@
 
 ```mermaid
 graph TD
-    시작 --> A[최신 연구/뉴스 수집 에이전트]
-    A --> B[핵심 기술 요약 에이전트]
-    B --> C[트렌드 예측 에이전트]
-    C --> D[리스크 및 기회 분석 에이전트]
-    D --> E[트렌드 보고서 작성 에이전트]
-    E --> 종료
+    시작 --> collect_data[CollectAgent: 연구/뉴스/트렌드 수집]
+    collect_data --> preprocess_analyze[KeywordAgent: 키워드 추출/트렌드 집계]
+    preprocess_analyze --> forecast_trend[ProphetAgent: 트렌드 예측]
+    forecast_trend --> risk_opportunity[RiskAgent: 기회/리스크 분석]
+    risk_opportunity --> generate_report[ReportAgent: 보고서 생성]
+    generate_report --> 종료
 ```
 
 ## Directory Structure
